@@ -1,15 +1,13 @@
 import React from 'react';
-import SearchForm from './components/search-box/SearchForm';
-import SearchDropBox from './components/search-box/SearchDropBox';
 import Header from './components/layout/Header';
+import SearchBox from './components/search-box/SearchBox';
 
 function App() {
   return (
     <React.Fragment>
       <Header />
       <main>
-        <SearchForm />
-        <SearchDropBox />
+        <SearchBox />
       </main>
     </React.Fragment>
   );

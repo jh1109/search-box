@@ -7,10 +7,18 @@
   flex-direction: column;
   gap: 0.6rem;
   margin: 1rem auto;
+  position: relative;
 }
 
 .dropBox h2 {
   font-size: 0.8rem;
   color: gray;
   font-weight: 400;
+}
+.dropBox button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.3rem 0.6rem;
+  color: gray;
 }
