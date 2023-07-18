@@ -24,7 +24,7 @@ const SearchBox = () => {
 
   return (
     <div>
-      <SearchForm onFocus={changeShowDropBoxHandler} onRequestAPI={requestAPI} />
+      <SearchForm onFocus={changeShowDropBoxHandler} onRequestAPI={requestAPI} searchBoxService={searchBoxService} />
       {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recommandKeywords} />}
     </div>
   );
