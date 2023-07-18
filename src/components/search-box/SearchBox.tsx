@@ -6,12 +6,14 @@ import { HttpClient } from '../../lib/api/httpClient';
 import { Keyword } from '../../lib/interfaces/keyword';
 import { debounce } from '../../lib/utils/debounce';
 
+const httpClient = new HttpClient('http://localhost:4000/sick');
+const searchBoxService = new SearchBoxService(httpClient);
+
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
-  const [recommandKeywords, setRecommandKeywords] = useState<Keyword[]>([]);
+  const [recommendKeywords, setRecommandKeywords] = useState<Keyword[]>([]);
 
-  const httpClient = new HttpClient('http://localhost:4000/sick');
-  const searchBoxService = new SearchBoxService(httpClient);
+  const recentlyKeywords = searchBoxService.getKeywords();
 
   const changeShowDropBoxHandler = (boolean: boolean) => {
     setShowDropBox(boolean)
@@ -25,7 +27,8 @@ const SearchBox = () => {
   return (
     <div>
       <SearchForm onFocus={changeShowDropBoxHandler} onRequestAPI={requestAPI} searchBoxService={searchBoxService} />
-      {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recommandKeywords} />}
+      {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recommendKeywords} />}
+      {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recentlyKeywords} />}
     </div>
   );
 };

@@ -5,9 +5,11 @@ import { hasKeyInLocalStorage } from "../lib/utils/hasKeyInLocalStorage";
 
 export class SearchBoxService {
   httpClient;
+  key;
 
   constructor(httpClient: HttpClient) {
     this.httpClient = httpClient;
+    this.key = 'recentlyKeywords' as const;
   }
 
   async postRecommandSearchWord(value: string) {
@@ -22,17 +24,31 @@ export class SearchBoxService {
     }
   }
 
+  hasKey() {
+    const hasKey = hasKeyInLocalStorage(this.key);
+    return hasKey;
+  }
+
   saveKeyword(keyword: string) {
-    const key: string = 'recentlyKeywords';
-    const hasKey = hasKeyInLocalStorage(key);
     let recentlyKeywords: string;
-    if (hasKey) {
-      const prevKeywords: Keyword[] = JSONparse(localStorage.getItem(key)!);
+    if (this.hasKey()) {
+      const prevKeywords: Keyword[] = JSONparse(localStorage.getItem(this.key)!);
       const updatedKeywords: Keyword[] = prevKeywords.concat({ sickCd: Math.random().toString(), sickNm: keyword });
       recentlyKeywords = JSONstringify(updatedKeywords);
     } else {
       recentlyKeywords = JSONstringify([{ sickCd: Math.random().toString(), sickNm: keyword }]);
     }
-    localStorage.setItem(key, recentlyKeywords);
+    localStorage.setItem(this.key, recentlyKeywords);
   }
+
+  getKeywords() {
+    let recentlyKeywords: Keyword[];
+    if (this.hasKey()) {
+      recentlyKeywords = JSONparse(localStorage.getItem(this.key))
+    } else {
+      recentlyKeywords = [];
+    }
+    return recentlyKeywords;
+  }
+
 }
