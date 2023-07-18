@@ -4,6 +4,7 @@ import SearchDropBox from './SearchDropBox';
 import { SearchBoxService } from '../../lib/api/services/searchBoxService';
 import { HttpClient } from '../../lib/api/httpClient';
 import { Keyword } from '../../lib/interfaces/keyword';
+import { debounce } from '../../lib/utils/debounce';
 
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
@@ -15,13 +16,15 @@ const SearchBox = () => {
   const changeShowDropBoxHandler = (boolean: boolean) => {
     setShowDropBox(boolean)
   }
-  const getRecommandKeywordsHandler = (recommandKeywords: Keyword[]) => {
-    setRecommandKeywords(recommandKeywords);
-  }
+  const requestAPI = debounce(async (value: string) => {
+    console.log('api 호출!');
+    const data = await searchBoxService.postRecommandSearchWord(value);
+    setRecommandKeywords(data);
+  }, 500);
 
   return (
     <div>
-      <SearchForm onFocus={changeShowDropBoxHandler} searchBoxService={searchBoxService} getRecommandKeywords={getRecommandKeywordsHandler} />
+      <SearchForm onFocus={changeShowDropBoxHandler} onRequestAPI={requestAPI} />
       {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recommandKeywords} />}
     </div>
   );

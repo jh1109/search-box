@@ -1,16 +1,13 @@
 import React, { useRef } from 'react';
 import classes from './SearchForm.module.css'
-import { SearchBoxService } from '../../lib/api/services/searchBoxService';
-import { Keyword } from '../../lib/interfaces/keyword';
 
-const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, searchBoxService: SearchBoxService, getRecommandKeywords: (recommandKeywords: Keyword[]) => void }> = ({ onFocus, searchBoxService, getRecommandKeywords }) => {
+const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, onRequestAPI: (args_0: string) => void }> = ({ onFocus, onRequestAPI }) => {
   const searchBoxInputRef = useRef<HTMLInputElement>(null);
 
-  const apiHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('API 호출!');
-    const data = await searchBoxService.postRecommandSearchWord(e.target.value);
-    getRecommandKeywords(data);
+  const apiHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onRequestAPI(e.target.value);
   }
+
   return (
     <form className={classes.searchForm}>
       <label htmlFor='searchBox' className='a11yHidden'>검색창</label>
