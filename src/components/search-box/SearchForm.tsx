@@ -2,11 +2,13 @@ import React, { useRef } from 'react';
 import classes from './SearchForm.module.css'
 import { SearchBoxService } from '../../services/searchBoxService';
 
-const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, onRequestAPI: (args_0: string) => void, searchBoxService: SearchBoxService }> = ({ onFocus, onRequestAPI, searchBoxService }) => {
+const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, onRequestAPI: (args_0: string) => void, searchBoxService: SearchBoxService, onChange: (boolean: boolean) => void }> = ({ onFocus, onRequestAPI, searchBoxService, onChange }) => {
   const searchBoxInputRef = useRef<HTMLInputElement>(null);
 
   const apiHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     onRequestAPI(e.target.value);
+    const isValid = e.target.value.trim().length > 0;
+    onChange(isValid);
   }
 
   const searchHandler = (e: React.ChangeEvent<HTMLFormElement>) => {

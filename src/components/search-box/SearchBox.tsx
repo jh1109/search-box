@@ -12,6 +12,7 @@ const searchBoxService = new SearchBoxService(httpClient);
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
   const [recommendKeywords, setRecommandKeywords] = useState<Keyword[]>([]);
+  const [inputIsValid, setInputIsValid] = useState(false);
 
   const recentlyKeywords = searchBoxService.getKeywords();
 
@@ -23,12 +24,14 @@ const SearchBox = () => {
     const data = await searchBoxService.postRecommandSearchWord(value);
     setRecommandKeywords(data);
   }, 500);
+  const changeInputIsValid = (boolean: boolean) => {
+    setInputIsValid(boolean);
+  }
 
   return (
     <div>
-      <SearchForm onFocus={changeShowDropBoxHandler} onRequestAPI={requestAPI} searchBoxService={searchBoxService} />
-      {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recommendKeywords} />}
-      {showDropBox && <SearchDropBox onClose={changeShowDropBoxHandler} keywords={recentlyKeywords} />}
+      <SearchForm onFocus={changeShowDropBoxHandler} onRequestAPI={requestAPI} searchBoxService={searchBoxService} onChange={changeInputIsValid} />
+      {showDropBox && <SearchDropBox title={inputIsValid ? '추천' : '최근'} onClose={changeShowDropBoxHandler} keywords={inputIsValid ? recommendKeywords : recentlyKeywords} />}
     </div>
   );
 };
