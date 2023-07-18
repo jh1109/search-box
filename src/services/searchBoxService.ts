@@ -31,7 +31,7 @@ export class SearchBoxService {
       const updatedKeywords: Keyword[] = prevKeywords.concat({ sickCd: Math.random().toString(), sickNm: keyword });
       recentlyKeywords = JSONstringify(updatedKeywords);
     } else {
-      recentlyKeywords = JSONstringify({ sickCd: Math.random().toString(), sickNm: keyword });
+      recentlyKeywords = JSONstringify([{ sickCd: Math.random().toString(), sickNm: keyword }]);
     }
     localStorage.setItem(key, recentlyKeywords);
   }
