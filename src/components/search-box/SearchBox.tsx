@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchForm from './SearchForm';
 import SearchDropBox from './SearchDropBox';
-import { SearchBoxService } from '../../lib/api/services/searchBoxService';
+import { SearchBoxService } from '../../services/searchBoxService';
 import { HttpClient } from '../../lib/api/httpClient';
 import { Keyword } from '../../lib/interfaces/keyword';
 import { debounce } from '../../lib/utils/debounce';

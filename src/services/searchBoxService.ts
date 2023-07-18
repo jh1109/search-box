@@ -1,4 +1,4 @@
-import { HttpClient } from "../httpClient";
+import { HttpClient } from "../lib/api/httpClient";
 
 export class SearchBoxService {
   httpClient;
