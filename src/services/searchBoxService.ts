@@ -1,4 +1,5 @@
 import { HttpClient } from "../lib/api/httpClient";
+import { Keyword } from "../lib/interfaces/keyword";
 import { JSONparse, JSONstringify } from "../lib/utils/JSON";
 import { hasKeyInLocalStorage } from "../lib/utils/hasKeyInLocalStorage";
 
@@ -26,11 +27,11 @@ export class SearchBoxService {
     const hasKey = hasKeyInLocalStorage(key);
     let recentlyKeywords: string;
     if (hasKey) {
-      const prevKeywords: string[] = JSONparse(localStorage.getItem(key)!);
-      const updatedKeywords: string[] = prevKeywords.concat(keyword);
+      const prevKeywords: Keyword[] = JSONparse(localStorage.getItem(key)!);
+      const updatedKeywords: Keyword[] = prevKeywords.concat({ sickCd: Math.random().toString(), sickNm: keyword });
       recentlyKeywords = JSONstringify(updatedKeywords);
     } else {
-      recentlyKeywords = JSONstringify([keyword]);
+      recentlyKeywords = JSONstringify({ sickCd: Math.random().toString(), sickNm: keyword });
     }
     localStorage.setItem(key, recentlyKeywords);
   }
