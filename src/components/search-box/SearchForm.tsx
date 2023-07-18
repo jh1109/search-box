@@ -9,8 +9,11 @@ const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, onRequestAPI: 
     onRequestAPI(e.target.value);
   }
 
-  const searchHandler = () => {
+  const searchHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
     searchBoxService.saveKeyword(searchBoxInputRef.current!.value);
+    onFocus(false);
+    searchBoxInputRef.current!.blur();
   }
 
   return (
