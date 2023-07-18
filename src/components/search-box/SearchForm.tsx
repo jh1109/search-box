@@ -8,8 +8,35 @@ const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, onRequestAPI: 
     onRequestAPI(e.target.value);
   }
 
+  const localStorageKeys = Object.keys(localStorage);
+  const hasKeyInLocalStorage = (keyValue: string) => {
+    for (let key of localStorageKeys) {
+      if (!(key === keyValue)) {
+        continue;
+      }
+      return true;
+    }
+    return false;
+  }
+
+
+  const searchHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const hasRecentlyKeywords = hasKeyInLocalStorage('recentlyKeywords');
+    let recentlyKeywords: string;
+    if (hasRecentlyKeywords) {
+      const prevRecentlyKeywords: string[] = JSON.parse(localStorage.getItem('recentlyKeywords')!);
+      const updatedRecentlyKeywords: string[] = prevRecentlyKeywords.concat(searchBoxInputRef.current!.value);
+      recentlyKeywords = JSON.stringify(updatedRecentlyKeywords);
+    } else {
+      recentlyKeywords = JSON.stringify([searchBoxInputRef.current!.value]);
+    }
+    localStorage.setItem('recentlyKeywords', recentlyKeywords);
+  }
+
+
   return (
-    <form className={classes.searchForm}>
+    <form className={classes.searchForm} onSubmit={searchHandler}>
       <label htmlFor='searchBox' className='a11yHidden'>검색창</label>
       <input
         type='text'
