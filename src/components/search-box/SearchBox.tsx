@@ -11,11 +11,12 @@ const searchBoxService = new SearchBoxService(httpClient);
 
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
-  const [recommendKeywords, setRecommandKeywords] = useState<Keyword[]>([]);
+  const [recommendKeywords, setRecommendKeywords] = useState<Keyword[]>([]);
+  const [recentlyKeywords, setRecentlyKeywords] = useState<Keyword[]>(
+    searchBoxService.getKeywords() || [],
+  );
   const [inputIsValid, setInputIsValid] = useState(false);
   const [focusIdx, setFocusIdx] = useState(-1);
-
-  const recentlyKeywords = searchBoxService.getKeywords();
 
   const changeShowDropBoxHandler = (boolean: boolean) => {
     setShowDropBox(boolean);
@@ -23,7 +24,7 @@ const SearchBox = () => {
   const requestAPI = debounce(async (value: string) => {
     console.info('calling api');
     const data = await searchBoxService.postRecommandSearchWord(value);
-    setRecommandKeywords(data);
+    setRecommendKeywords(data);
   }, 500);
   const changeInputIsValid = (boolean: boolean) => {
     setInputIsValid(boolean);
@@ -36,6 +37,20 @@ const SearchBox = () => {
       setFocusIdx(focusIdx => focusIdx - 1);
     }
   };
+  const hasKeywordHandler = (value: string) => {
+    const filterKeywords = recentlyKeywords.filter(
+      keyword => keyword.sickNm !== value,
+    );
+    const newKeyword = { sickCd: Math.random().toString(), sickNm: value };
+    if (filterKeywords.length === recentlyKeywords.length) {
+      setRecentlyKeywords(recentlyKeywords => [
+        newKeyword,
+        ...recentlyKeywords,
+      ]);
+    } else {
+      setRecentlyKeywords([newKeyword, ...filterKeywords]);
+    }
+  };
 
   return (
     <div>
@@ -45,6 +60,7 @@ const SearchBox = () => {
         searchBoxService={searchBoxService}
         onChange={changeInputIsValid}
         onKeyDown={keyboardHandler}
+        onAddKeyword={hasKeywordHandler}
       />
       {showDropBox && (
         <SearchDropBox
