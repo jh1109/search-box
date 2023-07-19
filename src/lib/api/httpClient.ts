@@ -10,9 +10,8 @@ export class HttpClient {
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
-      }
-
-    }
-    return window.fetch(this.baseURL + endPoint, optionsWithDefault)
+      },
+    };
+    return window.fetch(this.baseURL + endPoint, optionsWithDefault);
   }
 }

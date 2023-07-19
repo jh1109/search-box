@@ -8,4 +8,4 @@ export const hasKeyInLocalStorage = (keyValue: string) => {
     return true;
   }
   return false;
-}
+};

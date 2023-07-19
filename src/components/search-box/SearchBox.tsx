@@ -11,7 +11,7 @@ const searchBoxService = new SearchBoxService(httpClient);
 
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
-  const [recommendKeywords, setRecommandKeywords] = useState<Keyword[]>([]);
+  const [recommendKeywords, setRecommendKeywords] = useState<Keyword[]>([]);
   const [recentlyKeywords, setRecentlyKeywords] = useState<Keyword[]>([]);
   const [inputIsValid, setInputIsValid] = useState(false);
   const [focusIdx, setFocusIdx] = useState(-1);
@@ -22,7 +22,7 @@ const SearchBox = () => {
   const requestAPI = debounce(async (value: string) => {
     console.info('calling api');
     const data = await searchBoxService.postRecommandSearchWord(value);
-    setRecommandKeywords(data);
+    setRecommendKeywords(data);
   }, 500);
   const changeInputIsValid = (boolean: boolean) => {
     setInputIsValid(boolean);

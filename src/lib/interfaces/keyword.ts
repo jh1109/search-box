@@ -1,4 +1,4 @@
 export interface Keyword {
-  sickCd: string,
-  sickNm: string
+  sickCd: string;
+  sickNm: string;
 }
