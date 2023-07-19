@@ -27,7 +27,8 @@ const SearchForm: React.FC<{ onFocus: (boolean: boolean) => void, onRequestAPI: 
         placeholder='검색어를 입력해주세요.'
         onFocus={() => onFocus(true)}
         ref={searchBoxInputRef}
-        onChange={apiHandler} />
+        onChange={apiHandler}
+        autoComplete='off' />
       <button type='reset' className={classes.resetBtn}>X</button>
       <button type='submit' className={classes.submitBtn}>검색</button>
     </form>
