@@ -12,7 +12,9 @@ const searchBoxService = new SearchBoxService(httpClient);
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
   const [recommendKeywords, setRecommendKeywords] = useState<Keyword[]>([]);
-  const [recentlyKeywords, setRecentlyKeywords] = useState<Keyword[]>([]);
+  const [recentlyKeywords, setRecentlyKeywords] = useState<Keyword[]>(
+    searchBoxService.getKeywords() || [],
+  );
   const [inputIsValid, setInputIsValid] = useState(false);
   const [focusIdx, setFocusIdx] = useState(-1);
 

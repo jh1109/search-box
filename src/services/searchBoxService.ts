@@ -41,4 +41,8 @@ export class SearchBoxService {
     }
     localStorage.setItem(this.key, recentlyKeywords);
   }
+
+  getKeywords() {
+    return JSONparse(localStorage.getItem(this.key));
+  }
 }
