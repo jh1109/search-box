@@ -21,7 +21,7 @@ const SearchBox = () => {
     setShowDropBox(boolean);
   };
   const requestAPI = debounce(async (value: string) => {
-    console.log('api 호출!');
+    console.info('calling api');
     const data = await searchBoxService.postRecommandSearchWord(value);
     setRecommandKeywords(data);
   }, 500);
