@@ -4,4 +4,7 @@
   &:focus {
     background: #f2f4f7;
   }
+  &.onFocus {
+    background: #f2f4f7;
+  }
 }
