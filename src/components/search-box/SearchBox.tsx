@@ -12,10 +12,9 @@ const searchBoxService = new SearchBoxService(httpClient);
 const SearchBox = () => {
   const [showDropBox, setShowDropBox] = useState(false);
   const [recommendKeywords, setRecommandKeywords] = useState<Keyword[]>([]);
+  const [recentlyKeywords, setRecentlyKeywords] = useState<Keyword[]>([]);
   const [inputIsValid, setInputIsValid] = useState(false);
   const [focusIdx, setFocusIdx] = useState(-1);
-
-  const recentlyKeywords = searchBoxService.getKeywords();
 
   const changeShowDropBoxHandler = (boolean: boolean) => {
     setShowDropBox(boolean);
@@ -36,6 +35,9 @@ const SearchBox = () => {
       setFocusIdx(focusIdx => focusIdx - 1);
     }
   };
+  const addRecentlyKeywords = (keyword: Keyword) => {
+    setRecentlyKeywords(recentlyKeywords => [keyword, ...recentlyKeywords]);
+  };
 
   return (
     <div>
@@ -45,6 +47,7 @@ const SearchBox = () => {
         searchBoxService={searchBoxService}
         onChange={changeInputIsValid}
         onKeyDown={keyboardHandler}
+        onAddKeyword={addRecentlyKeywords}
       />
       {showDropBox && (
         <SearchDropBox
