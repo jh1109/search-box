@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import classes from './SearchForm.module.css';
 import { SearchBoxService } from '../../services/searchBoxService';
+import { hasKeyInLocalStorage } from '../../lib/utils/hasKeyInLocalStorage';
 
 const SearchForm: React.FC<{
   onFocus: (boolean: boolean) => void;
@@ -8,11 +9,21 @@ const SearchForm: React.FC<{
   searchBoxService: SearchBoxService;
   onChange: (boolean: boolean) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-}> = ({ onFocus, onRequestAPI, searchBoxService, onChange, onKeyDown }) => {
+  onAddKeyword: (value: string) => void;
+}> = ({
+  onFocus,
+  onRequestAPI,
+  searchBoxService,
+  onChange,
+  onKeyDown,
+  onAddKeyword,
+}) => {
   const searchBoxInputRef = useRef<HTMLInputElement>(null);
+  const initialHasKey = hasKeyInLocalStorage(searchBoxService.key);
+  const [hasKey, setHasKey] = useState(initialHasKey);
 
   const apiHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
+    const value = searchBoxInputRef.current!.value.trim();
     onRequestAPI(value);
     const isValid = value.length > 0;
     onChange(isValid);
@@ -20,7 +31,10 @@ const SearchForm: React.FC<{
 
   const searchHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    searchBoxService.saveKeyword(searchBoxInputRef.current!.value);
+    const value = searchBoxInputRef.current!.value.trim();
+    searchBoxService.saveKeyword(hasKey, value);
+    !hasKey && setHasKey(true);
+    onAddKeyword(value);
     onFocus(false);
     searchBoxInputRef.current!.blur();
   };
