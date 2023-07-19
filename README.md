@@ -34,6 +34,8 @@
 - `focusIdx` 값과 `map` method의 `index` 인자를 비교하여 일치할 때 조건에 따른 스타일링 추가
 
 ## 💻 프로젝트 사용법
+❗ 서버실행 : 아래 repository로 이동하여 4000포트에 api 서버를 열어주세요.  
+[api repository 이동](https://github.com/walking-sunset/assignment-api)
 ```
 npm install & npm start
 ```
