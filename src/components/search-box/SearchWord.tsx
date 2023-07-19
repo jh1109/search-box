@@ -1,14 +1,15 @@
 import React from 'react';
 
-import classes from './SearchWord.module.css'
-import { Keyword } from '../../lib/interfaces/keyword';
+import classNames from 'classnames/bind';
+import classes from './SearchWord.module.css';
 
-const SearchWord: React.FC<{ keyword: Keyword }> = ({ keyword }) => {
-  return (
-    <li className={classes.searchword}>
-      {keyword.sickNm}
-    </li>
-  );
+const cx = classNames.bind(classes);
+
+const SearchWord: React.FC<{ sickNm: string; onFocus: boolean }> = ({
+  sickNm,
+  onFocus,
+}) => {
+  return <li className={cx('searchword', { onFocus })}>{sickNm}</li>;
 };
 
 export default SearchWord;
