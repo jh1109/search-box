@@ -12,8 +12,9 @@ const SearchForm: React.FC<{
   const searchBoxInputRef = useRef<HTMLInputElement>(null);
 
   const apiHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onRequestAPI(e.target.value);
-    const isValid = e.target.value.trim().length > 0;
+    const value = e.target.value.trim();
+    onRequestAPI(value);
+    const isValid = value.length > 0;
     onChange(isValid);
   };
 
