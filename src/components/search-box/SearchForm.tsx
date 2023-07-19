@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import classes from './SearchForm.module.css';
 import { SearchBoxService } from '../../services/searchBoxService';
 import { hasKeyInLocalStorage } from '../../lib/utils/hasKeyInLocalStorage';
-import { Keyword } from '../../lib/interfaces/keyword';
 
 const SearchForm: React.FC<{
   onFocus: (boolean: boolean) => void;
@@ -10,7 +9,7 @@ const SearchForm: React.FC<{
   searchBoxService: SearchBoxService;
   onChange: (boolean: boolean) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  onAddKeyword: (keyword: Keyword) => void;
+  onAddKeyword: (value: string) => void;
 }> = ({
   onFocus,
   onRequestAPI,
@@ -35,7 +34,7 @@ const SearchForm: React.FC<{
     const value = searchBoxInputRef.current!.value.trim();
     searchBoxService.saveKeyword(hasKey, value);
     !hasKey && setHasKey(true);
-    onAddKeyword({ sickCd: Math.random().toString(), sickNm: value });
+    onAddKeyword(value);
     onFocus(false);
     searchBoxInputRef.current!.blur();
   };

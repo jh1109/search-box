@@ -35,8 +35,19 @@ const SearchBox = () => {
       setFocusIdx(focusIdx => focusIdx - 1);
     }
   };
-  const addRecentlyKeywords = (keyword: Keyword) => {
-    setRecentlyKeywords(recentlyKeywords => [keyword, ...recentlyKeywords]);
+  const hasKeywordHandler = (value: string) => {
+    const filterKeywords = recentlyKeywords.filter(
+      keyword => keyword.sickNm !== value,
+    );
+    const newKeyword = { sickCd: Math.random().toString(), sickNm: value };
+    if (filterKeywords.length === recentlyKeywords.length) {
+      setRecentlyKeywords(recentlyKeywords => [
+        newKeyword,
+        ...recentlyKeywords,
+      ]);
+    } else {
+      setRecentlyKeywords([newKeyword, ...filterKeywords]);
+    }
   };
 
   return (
@@ -47,7 +58,7 @@ const SearchBox = () => {
         searchBoxService={searchBoxService}
         onChange={changeInputIsValid}
         onKeyDown={keyboardHandler}
-        onAddKeyword={addRecentlyKeywords}
+        onAddKeyword={hasKeywordHandler}
       />
       {showDropBox && (
         <SearchDropBox
